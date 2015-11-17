@@ -72,30 +72,6 @@
   </info>
   <notepads>
   </notepads>
-  <connection>
-    <name>bbdev01</name>
-    <server>dbclusteracc1.ic.uva.nl</server>
-    <type>ORACLE</type>
-    <access>Native</access>
-    <database>bb91dev_3</database>
-    <port>1522</port>
-    <username>Kettle_read</username>
-    <password>Encrypted 2be98afc86ad49f8da71c9164d196aec3</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>1522</attribute></attribute>
-      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
   <order>
   <hop> <from>query db for logins</from><to>login row to statement</to><enabled>Y</enabled> </hop>
   <hop> <from>login row to statement</from><to>statement to lrs</to><enabled>Y</enabled> </hop>
