@@ -162,8 +162,8 @@
     <methodFieldName/>
     <urlField/>
     <bodyField/>
-    <httpLogin>cfk</httpLogin>
-    <httpPassword>Encrypted 2be98afc86aa79ad7fa4cfd7edcc1bddd</httpPassword>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
     <proxyHost/>
     <proxyPort/>
     <preemptive>N</preemptive>
