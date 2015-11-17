@@ -970,7 +970,7 @@ body .markdown-body
 
 <p>One thing you should note, though, is that it requires a few environment variables:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/1.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/1.png" alt="Starting Spoon from the command line" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/1.png" target="_blank"><img src="./tut_img/1.png" alt="Starting Spoon from the command line" style="max-width:100%;"></a></p>
 
 <p>As far as I know, the only one Spoon needs to work is <code>JAVA_HOME</code> (though it will complain at you if the others aren't set), but if I recall correctly Pan and Kitchen (command-line tools we'll be seeing later) need the other two, so you might as well set them and forget about them.</p>
 
@@ -980,7 +980,7 @@ body .markdown-body
 
 <p>If this is all sorted out, Spoon should fire up:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/2.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/2.png" alt="First look at Spoon" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/2.png" target="_blank"><img src="./tut_img/2.png" alt="First look at Spoon" style="max-width:100%;"></a></p>
 
 <h3>
 <a id="user-content-initial-requirements" class="anchor" href="#initial-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initial requirements</h3>
@@ -1006,7 +1006,7 @@ body .markdown-body
 
 <p>Kettle calls the files you design in Spoon <em>transformations</em> (which I've been calling transforms for short); the first thing to do, then, is to create one, and to make sure you can get records from the DB with the information you need.</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/3.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/3.png" alt="Create a new transformation" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/3.png" target="_blank"><img src="./tut_img/3.png" alt="Create a new transformation" style="max-width:100%;"></a></p>
 
 <p>Next, drag a <em>Table input</em> step from the sidebar to the workspace. (You can filter the available steps by entering text in the box.)</p>
 
@@ -1014,7 +1014,7 @@ body .markdown-body
 <p>To actually write the SQL, I prefer not to use Spoon; if you just want to know if a query will run and return useful data, you don't need to know what happens to the data after that, so there's no reason to run a partially-complete transform. You <em>can</em>, of course, but there's a lot of overhead that I feel slows me down. I like how you can hit <code>Ctrl+Enter</code> to run a single statement in SQL Developer, but you can also write scripts in your favorite text editor and execute them from the command line. Whatever works.</p>
 </blockquote>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/4.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/4.png" alt="Table input" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/4.png" target="_blank"><img src="./tut_img/4.png" alt="Table input" style="max-width:100%;"></a></p>
 
 <p>Above, I said "records with the information you need"; this seems trivially obvious, but I mean it in a way that may not be. (It wasn't to me at first.) Kettle works on <em>rows</em> - that is to say, the fundamental, indivisible unit of data is a single record which is understood to consist of fields. (You can conceptually divide a row into any number of groups of its constituent fields, but if you did this literally in Kettle, what you would have would be new, separate rows with fields that happen to correspond to some degree with the input row.)</p>
 
@@ -1119,11 +1119,11 @@ body .markdown-body
 
 <p>Your query should now be sufficiently rigorous; open the <em>Table input</em> step configuration in Spoon by double-clicking it and copy-paste the SQL in. <strong>IMPORTANT: Kettle doesn't expect more than one SQL statement per <em>Table input</em> step, so it'll choke on the terminating semicolon if you don't remove it.</strong> This is also a good time to give the step a more descriptive name.</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/5.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/5.png" alt="Filling in the finished query" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/5.png" target="_blank"><img src="./tut_img/5.png" alt="Filling in the finished query" style="max-width:100%;"></a></p>
 
 <p>If you try to press "OK" now, Kettle will complain that you haven't selected a database connection. You can either create one of these by right-clicking the appropriate sidebar item and selecting "New", or by clicking the "New..." button in the <em>Table input</em> step. They both lead to the same dialog:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/6.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/6.png" alt="New database connection" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/6.png" target="_blank"><img src="./tut_img/6.png" alt="New database connection" style="max-width:100%;"></a></p>
 
 <p>Fill in your details and credentials here. One stumbling block I encountered here (with which the docs were unhelpful) was that "Database name" is straight-up mislabeled and actually refers to the database <em>instance</em> name, which you should be able to find in the Blackboard frontend admin console. </p>
 
@@ -1138,15 +1138,15 @@ body .markdown-body
 
 <p>Kettle does a fair bit of work for you under the hood; for instance, if you drag a <em>Modified Java Script Value</em> step to the workspace... </p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/7.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/7.png" alt="Add some logic" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/7.png" target="_blank"><img src="./tut_img/7.png" alt="Add some logic" style="max-width:100%;"></a></p>
 
 <p>...link it with the finished query step (shift-click on <em>query db for logins</em> and drag to the new step)...</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/8.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/8.png" alt="Link up" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/8.png" target="_blank"><img src="./tut_img/8.png" alt="Link up" style="max-width:100%;"></a></p>
 
 <p>...and open it up for configuration, you should see "Getting fields...please wait" in the left sidebar under "Input fields" for a moment before the fields appear from the query we just designed, as Kettle runs the query to make sure it's valid and to decide what fields to show you.</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/9.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/9.png" alt="Link complete" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/9.png" target="_blank"><img src="./tut_img/9.png" alt="Link complete" style="max-width:100%;"></a></p>
 
 <blockquote>
 <p>Incidentally, "Modified Java Script Step" is also a misnomer at this point. Presumably there was once a different kind of JavaScript step, and they presumably existed side-by-side for a while, but now there's just this one, so "modified" is misleading - it's just JS. It also doesn't return a single value; it returns as many as you like, as new fields on the rows that pass through it. UI is not Kettle's strong suit.</p>
@@ -1301,7 +1301,7 @@ statement.timestamp <span class="pl-k">=</span> <span class="pl-k">new</span> <s
 
 <p>So now that the code is sorted, we want to make sure the step is sending the correct output (in this case, the finished statement as a JSON string). That's what the table at the bottom of the step configuration dialog is for: click "Get Variables" and it'll populate itself with all the variables you declared in the currently selected script tab. (It occasionally gets the type wrong, but you can change that manually. You don't even have to use "Get Variables"; just don't typo when entering the variable name you want to pass as an output field.)</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/10.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/10.png" alt="Get variables" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/10.png" target="_blank"><img src="./tut_img/10.png" alt="Get variables" style="max-width:100%;"></a></p>
 
 <p>Obviously, we don't need <code>statement</code> in there, so click its row number to select the whole row, delete it, and click "OK" to return to the workspace (after giving the new step an appropriate name as well). If you right-click on the JS step and select "Show output fields" you'll see that in addition to the field you told it to output, it's also passing through all the fields from the previous step. This isn't a disaster, but it's something to be aware of, especially since:</p>
 
@@ -1317,11 +1317,11 @@ statement.timestamp <span class="pl-k">=</span> <span class="pl-k">new</span> <s
 
 <p>We're almost done with a basic transform - the last part is to send our finished statement to an LRS. Since it's just a REST service, you'll need a <em>REST Client</em> step:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/11.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/11.png" alt="REST client" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/11.png" target="_blank"><img src="./tut_img/11.png" alt="REST client" style="max-width:100%;"></a></p>
 
 <p>This one doesn't involve any code, it's just a dialog box with various configurable options. </p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/12.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/12.png" alt="REST config" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/12.png" target="_blank"><img src="./tut_img/12.png" alt="REST config" style="max-width:100%;"></a></p>
 
 <p>Things to pay attention to:</p>
 
@@ -1359,7 +1359,7 @@ statement.timestamp <span class="pl-k">=</span> <span class="pl-k">new</span> <s
 
 <p>I put it in the JavaScript step, for the same reason that I scope my SQL joins (that is, the version is relevant to the processing of the statement, which only gets produced in the JavaScript step), but YMMV as always. Whichever way you do it: the input field you select from the drop-down box in the Headers tab becomes the header value, and the table cell next to it becomes the header name.</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/13.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/13.png" alt="Headers tab" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/13.png" target="_blank"><img src="./tut_img/13.png" alt="Headers tab" style="max-width:100%;"></a></p>
 </li>
 </ul>
 
@@ -1373,7 +1373,7 @@ statement.timestamp <span class="pl-k">=</span> <span class="pl-k">new</span> <s
 
 <p>This one is pretty simple: all you need is a <em>Write to log</em> step.</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/14.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/14.png" alt="Logging" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/14.png" target="_blank"><img src="./tut_img/14.png" alt="Logging" style="max-width:100%;"></a></p>
 
 <p>This step is also useful for debugging purposes, but it has a caveat: it doesn't just automatically log whatever fields it's passed. If you have a step that's passing rows with, say, <code>field_x</code> and <code>field_y</code>, and you hook it up to a <em>Write to log</em> step, you have to open said step and click "Get Fields" so that it can see what options it has to choose from (which you can then trim if, for instance, you don't want to see <code>field_x</code>). If, later, you add <code>field_z</code> to the rows passed to <em>Write to log</em>, it (perhaps obviously) won't log that until you "Get Fields" again, but even more annoyingly, if you instead <em>change</em> <code>field_x</code> to <code>field_z</code> in the input it'll actually fail with an error because the <em>Write to log</em> step no longer sees the <code>field_x</code> it's expecting.</p>
 
@@ -1413,21 +1413,21 @@ student_idn
 
 <p>Once you have the text file, add these two steps to the transform:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/15.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/15.png" alt="Read command args" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/15.png" target="_blank"><img src="./tut_img/15.png" alt="Read command args" style="max-width:100%;"></a></p>
 
 <p>Configuring <em>Get System Info</em> is straightforward; you just have to tell it what you want and what to call it:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/16.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/16.png" alt="Sysinfo config" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/16.png" target="_blank"><img src="./tut_img/16.png" alt="Sysinfo config" style="max-width:100%;"></a></p>
 
 <p>Configuring <em>Text file input</em> is slightly more annoying, though it helps to realize that Kettle still expects to see rows and fields in whatever file you read in.</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/17.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/17.png" alt="File tab config" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/17.png" target="_blank"><img src="./tut_img/17.png" alt="File tab config" style="max-width:100%;"></a></p>
 
 <p>The File tab is straightforward enough, though. Checking "Accept filenames from previous step" grays out the entire upper two-thirds of the dialog; there should only be one option in the "Step to read filenames from" drop-down box; the only moderately stupid thing is that you have to manually input the field name - there's no drop-down box here, or a button to automatically get the step's input fields. (Because it wouldn't be open-source if there weren't a few unnecessary chances for bugs to slip in, I guess.)</p>
 
 <p>There are way many options to configure in this step, most of which you fortunately don't have to touch. Some things to pay attention to, though:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/18.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/18.png" alt="Content tab config" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/18.png" target="_blank"><img src="./tut_img/18.png" alt="Content tab config" style="max-width:100%;"></a></p>
 
 <ul>
 <li>Kettle has lied to you again: the step is called <em>Text file input</em>, implying you can read in arbitrary text files, but actually the only two formats it accepts are CSV and fixed-width CSV. This means that while our list of student IDs will be parsed just fine, Kettle is actually treating it as a CSV file with only one field.</li>
@@ -1439,11 +1439,11 @@ student_idn
 
 <p>The last thing you need to do is tell Kettle what you want to call the single field it's reading from your text file; "Get Fields" won't work here, because the pre-processing that determines the incoming field names doesn't include generating command-line arguments, so just input a name and a type in the Fields tab, click "OK", and connect the step to <em>query db for logins</em>:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/19.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/19.png" alt="Fields config" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/19.png" target="_blank"><img src="./tut_img/19.png" alt="Fields config" style="max-width:100%;"></a></p>
 
 <p>Speaking of which: we'll have to edit that step if we want to make use of the ability to programmatically configure the query.</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/20.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/20.png" alt="Edit query" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/20.png" target="_blank"><img src="./tut_img/20.png" alt="Edit query" style="max-width:100%;"></a></p>
 
 <p>We're doing three things here:</p>
 
@@ -1494,13 +1494,13 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
 
 <p>Kettle will throw a lot of superfluous boilerplate log at you:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/21.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/21.png" alt="Pan logs" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/21.png" target="_blank"><img src="./tut_img/21.png" alt="Pan logs" style="max-width:100%;"></a></p>
 
 <p>You generally only have to start paying attention when the <em>Write to log</em> step starts talking; in any case, though, this is the part where you start getting errors if things are configured incorrectly. For instance, the first time I ran this I got a JSON error from the LRS (which is helpfully sent back as the HTTP response, and therefore logged by Kettle as the value of the <code>response</code> field in <em>Write to log</em>) because I forgot to camel-case "homePage" in the statement skeleton object.</p>
 
 <p>Once I fixed that, I started getting a different JSON error (so if you're following along then you should be getting it as well); the format of a timestamp stringified exactly as the DB supplies it is apparently not one the LRS is prepared to accept:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/22.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/22.png" alt="Bad timestamp" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/22.png" target="_blank"><img src="./tut_img/22.png" alt="Bad timestamp" style="max-width:100%;"></a></p>
 
 <p>There are, as usual by this point, several ways you can fix this; I prefer to take care of it in the DB query, for reasons you can probably guess by now. You'll find, though, that every dialect of SQL has its own pecularities as regards datetime format elements; a quick dip into the <a href="https://docs.oracle.com/cd/B28359_01/server.111/b28286/sql_elements004.htm#i34924">Oracle docs</a> reveals that if this is the format expected by the LRS (and I picked this one because it's ISO8601-compliant, which is never a bad idea):</p>
 
@@ -1520,7 +1520,7 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
 
 <p>Run the transform again and all is well (the LRS sends the UUID of any statement it accepts as the response to the HTTP request which created that statement):</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/23.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/23.png" alt="Good timestamp" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/23.png" target="_blank"><img src="./tut_img/23.png" alt="Good timestamp" style="max-width:100%;"></a></p>
 
 <p>Hang on, though - if we schedule this transform to run regularly (say, once every day), it's going to send a lot of duplicate statements to the LRS (because there's no functionality to check what rows we've already seen, and indeed that's not possible to do in a single transform because - quite sensibly - identical rows generated by the same transform at different times will be parsed as logically different); because the LRS only cares about form and not about content, it'll accept them, analytics based on the LRS will go off the rails, and everyone will be pissed off. How do we make sure we're only sending statements we haven't already sent?</p>
 
@@ -1570,17 +1570,17 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
 
 <p>We're also going to need the <em>Generate Rows</em> step, since the <em>REST Client</em> step needs some input that we can't declare in its configuration. The workspace should look like this:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/24.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/24.png" alt="Timestamp getter workspace" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/24.png" target="_blank"><img src="./tut_img/24.png" alt="Timestamp getter workspace" style="max-width:100%;"></a></p>
 
 <p>Configuration of <em>Generate Rows</em> is pretty straightforward:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/25.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/25.png" alt="Generate rows config" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/25.png" target="_blank"><img src="./tut_img/25.png" alt="Generate rows config" style="max-width:100%;"></a></p>
 
 <p>We're just setting the value of the <code>X-Experience-API-Version</code> header the way the <em>REST Client</em> step receives it from the row-to-statement step in the main transform, and sending it once.</p>
 
 <p>The <em>REST Client</em> step needs a little more talking about, although the "Authentication" and "Headers" tabs should look identical to the ones in the main transform:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/26.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/26.png" alt="REST client config" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/26.png" target="_blank"><img src="./tut_img/26.png" alt="REST client config" style="max-width:100%;"></a></p>
 
 <p>You can't declare headers in the step config, but at least you can specify the whole query: the URL to which we're POSTing in the main transform is also the one we GET from, but we also need to append a query string or we'll just get the 500 most recent statements (which is the order in which the LRS returns them by default, so we don't have to specify that) and a URL to GET from if we want the next 500. As you can see, we're just telling the LRS we want statements with the registration we specified in the main transform, and we only want one of them (which will then be the most recent one).</p>
 
@@ -1619,21 +1619,21 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
   timestamp<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>1970-01-01T01:00:00.000Z<span class="pl-pds">"</span></span>
 });</pre></div>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/27.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/27.png" alt="Drop a first statement in" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/27.png" target="_blank"><img src="./tut_img/27.png" alt="Drop a first statement in" style="max-width:100%;"></a></p>
 
 <pre><code>$ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf3.ktr
 &gt; pan /norep /file (fp .\tf3.ktr)
 </code></pre>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/28.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/28.png" alt="Success" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/28.png" target="_blank"><img src="./tut_img/28.png" alt="Success" style="max-width:100%;"></a></p>
 
 <p>Now that we know for sure that a GET request with the appropriate query will return something useful, we can get on with configuring the rest of the transform. The "Content" tab of the <em>Json Input</em> step you can leave as-is; the "File" tab only requires that you specify the field with incoming JSON:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/29.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/29.png" alt="JSON config 1" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/29.png" target="_blank"><img src="./tut_img/29.png" alt="JSON config 1" style="max-width:100%;"></a></p>
 
 <p>The "Content" tab is almost entirely straightforward as well, except for the "Path" field; this uses <a href="http://goessner.net/articles/JsonPath/">JSONPath</a> syntax to parse the JSON it receives.</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/30.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/30.png" alt="JSON config 2" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/30.png" target="_blank"><img src="./tut_img/30.png" alt="JSON config 2" style="max-width:100%;"></a></p>
 
 <p>Here's a breakdown of the syntax we're using, in case it's not totally clear:</p>
 
@@ -1656,7 +1656,7 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
 
 <p>The only thing left is to configure the <em>Set Variables</em> step to understand the output:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/31.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/31.png" alt="Variable config and warning" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/31.png" target="_blank"><img src="./tut_img/31.png" alt="Variable config and warning" style="max-width:100%;"></a></p>
 
 <p>With this, the transform to parse the latest timestamp should be complete - feel free to add a <em>Write to log</em> step to check that it returns the correct date. Make sure you select "Copy" as the data distribution method, so both <em>Set Variables</em> and the logger get the same rows, and "Get Fields" in the latter (and you should disable the hop from <em>parse response</em> to <em>Set Variables</em> for testing purposes, because if you run the transform by itself with Pan, there won't be a parent job in whose context to set the variable, and it'll error out).</p>
 
@@ -1665,14 +1665,14 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
 
 <p><code>Ctrl+Shift+N</code> creates a new job, and the workspace looks identical to that of a transform; the only real difference is that the sidebar gives you different steps (sorry, "entries"). All you really need to know is here:</p>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/32.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/32.png" alt="Job workspace" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/32.png" target="_blank"><img src="./tut_img/32.png" alt="Job workspace" style="max-width:100%;"></a></p>
 
 <p>You only need the <em>START</em> and <em>Transformation</em> entries, and when configuring the latter, all you need to do is enter the path to the transform in question. That little <code>&lt;$&gt;</code> symbol next to some configuration fields (which you have undoubtedly seen elsewhere) means that the value of a variable can be used for all or part of that field; select the field and hit <code>Ctrl+Space</code> to see which ones are available. Kettle predefines a few for you; in this case, we want <code>${Internal.Job.Filename.Directory}</code>, which does exactly what it says on the tin. (This means you'll have to keep the transforms in the same directory as the job; feel free to modify as you see fit, or even hardcode the paths, as long as the job knows exactly where to find the transforms.) The only thing left after this is to edit the DB query in the main transform to use the variable we just defined, and then we'll be ready to deploy.</p>
 
 <h4>
 <a id="user-content-incorporating-variables" class="anchor" href="#incorporating-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Incorporating variables</h4>
 
-<p><a href="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/33.png" target="_blank"><img src="///C://Users/CFK/Documents/projects/etl/kettle/tutorial/tut_img/33.png" alt="DB query redux" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/33.png" target="_blank"><img src="./tut_img/33.png" alt="DB query redux" style="max-width:100%;"></a></p>
 
 <p>This is all there is to it. Check the box "replace variables in script" (this is what it's actually for - told you we'd be seeing it eventually), and add another line to the <code>where</code> clause to filter on:</p>
 
