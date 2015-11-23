@@ -1077,7 +1077,7 @@ body .markdown-body
 ;</pre></div>
 
 <blockquote>
-<p>I got used to doing my joins this way while learning SQL because it seemed wasteful to make the DB return the whole row if all I wanted was a couple of fields; however I never actually noticed any difference in performance and it probably takes about the same amount of time even in theory if the tables are indexed. IANADBA, YMMV.<br>One thing that's capital-T True though: the Blackboard schema is esoteric enough that if you have to edit these queries, and all you know is that tables are being joined to other tables (as you would if my queries were flatter), you probably wouldn't learn anything useful from reading the query. This way, at least you can see what fields are being used and how.</p>
+<p>I got used to doing my joins this way while learning SQL because it seemed wasteful to make the DB return the whole row if all I wanted was a couple of fields; however I never actually noticed any difference in performance and it probably takes about the same amount of time even in theory if the tables are indexed. IANADBA, YMMV.</p></p>One thing that's capital-T True though: the Blackboard schema is esoteric enough that if you have to edit these queries, and all you know is that tables are being joined to other tables (as you would if my queries were flatter), you probably wouldn't learn anything useful from reading the query. This way, at least you can see what fields are being used and how.</p>
 </blockquote>
 
 <p>If you try running this you should notice that you also get a bunch of rows corresponding to instructor and administrator logins. That's no good - the target statement is <code>Student S logged in</code>. So, add another filter, and a join to return the data it filters on:</p>
