@@ -1125,7 +1125,9 @@ body .markdown-body
 
 <p><a href="./tut_img/6.png" target="_blank"><img src="./tut_img/6.png" alt="New database connection" style="max-width:100%;"></a></p>
 
-<p>Fill in your details and credentials here. One stumbling block I encountered here (with which the docs were unhelpful) was that "Database name" is straight-up mislabeled and actually refers to the database <em>instance</em> name, which you should be able to find in the Blackboard frontend admin console. </p>
+<p>Fill in your details and credentials here. One stumbling block I encountered here (with which the docs were unhelpful) was that "Database name" is straight-up mislabeled and actually refers to the database <em>instance</em> name, which you should be able to find like this: </p>
+
+<div class="highlight highlight-source-sql"><pre><span class="pl-k">select</span> sys_context(<span class="pl-s"><span class="pl-pds">'</span>userenv<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>instance_name<span class="pl-pds">'</span></span>) <span class="pl-k">from</span> dual;</pre></div>
 
 <blockquote>
 <p>If you're developing at the University of Amsterdam, you probably have access to the transforms I already wrote, so save yourself a lot of institutional headache: make a copy of a transform that uses a DB connection and delete all the steps, then save that somewhere under a different name. The underlying XML should still contain the connection information for dev and production DBs, which you can use in <em>Table input</em> steps as described above.</p>
