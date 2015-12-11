@@ -54,7 +54,7 @@
       <yloc>84</yloc>
       </entry>
     <entry>
-      <name>get latest timestamp</name>
+      <name>check if able to run</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -123,7 +123,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>get latest timestamp</to>
+      <to>check if able to run</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -131,7 +131,7 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>get latest timestamp</from>
+      <from>check if able to run</from>
       <to>bb logins to lrs</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
