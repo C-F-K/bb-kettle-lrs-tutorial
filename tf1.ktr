@@ -183,7 +183,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>bbdev01</connection>
+    <connection/>
     <sql>select&#xd;&#xa;	u.user_id,&#xd;&#xa;	to_char&#x28;aa.timestamp,&#x27;YYYY-MM-DD&#x22;T&#x22;HH24&#x3a;MI&#x3a;SS&#x22;.000Z&#x22;&#x27;&#x29; as timestamp&#xd;&#xa;from bb_bb60.activity_accumulator aa&#xd;&#xa;&#xd;&#xa;left join &#x28;&#xd;&#xa;	select&#xd;&#xa;		iu.pk1,&#xd;&#xa;		iu.user_id,&#xd;&#xa;		ir.name as role&#xd;&#xa;	from bb_bb60.users iu&#xd;&#xa;	left join &#x28;&#xd;&#xa;		select&#xd;&#xa;			pk1,&#xd;&#xa;			regexp_substr&#x28;role_name,&#x27;&#x5b;&#x5e;&#x5c;.&#x5d;&#x2b;&#x27;&#x29; as name&#xd;&#xa;		from bb_bb60.institution_roles&#xd;&#xa;	&#x29; ir&#xd;&#xa;	on iu.institution_roles_pk1 &#x3d; ir.pk1&#xd;&#xa;&#x29; u&#xd;&#xa;on aa.user_pk1 &#x3d; u.pk1&#xd;&#xa;&#xd;&#xa;where aa.event_type &#x3d; &#x27;LOGIN_ATTEMPT&#x27;&#xd;&#xa;and aa.data like &#x27;&#x25;Login succeeded&#x25;&#x27;&#xd;&#xa;and regexp_like&#x28;u.role,&#x27;student&#x27;,&#x27;i&#x27;&#x29;&#xd;&#xa;and u.user_id &#x3d; &#x3f;&#xd;&#xa;and aa.timestamp &#x3e; to_date&#x28;&#x27;&#x24;&#x7b;latest_timestamp&#x7d;&#x27;,&#xd;&#xa;                           &#x27;YYYY-MM-DD&#x22;T&#x22;HH24&#x3a;MI&#x3a;SS&#x22;.000Z&#x22;&#x27;&#x29;</sql>
     <limit>0</limit>
     <lookup>read user list</lookup>
