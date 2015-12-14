@@ -687,17 +687,17 @@ body .markdown-body
 }
 
 .markdown-body kbd {
-  background-color: #e7e7e7;
-  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
-  background-image: linear-gradient(#fefefe, #e7e7e7);
-  background-repeat: repeat-x;
   display: inline-block;
   padding: 3px 5px;
-  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 11px;
   line-height: 10px;
-  color: #000;
-  border: 1px solid #cfcfcf;
-  border-radius: 2px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
 }
 
 .markdown-body .highlight .pl-coc,
@@ -1077,7 +1077,7 @@ body .markdown-body
 ;</pre></div>
 
 <blockquote>
-<p>I got used to doing my joins this way while learning SQL because it seemed wasteful to make the DB return the whole row if all I wanted was a couple of fields; however I never actually noticed any difference in performance and it probably takes about the same amount of time even in theory if the tables are indexed. IANADBA, YMMV.<br><br>One thing that's capital-T True though: the Blackboard schema is esoteric enough that if you have to edit these queries, and all you know is that tables are being joined to other tables (as you would if my queries were flatter), you probably wouldn't learn anything useful from reading the query. This way, at least you can see what fields are being used and how.</p>
+<p>I got used to doing my joins this way while learning SQL because it seemed wasteful to make the DB return the whole row if all I wanted was a couple of fields; however I never actually noticed any difference in performance and it probably takes about the same amount of time even in theory if the tables are indexed. IANADBA, YMMV.</p>
 </blockquote>
 
 <p>If you try running this you should notice that you also get a bunch of rows corresponding to instructor and administrator logins. That's no good - the target statement is <code>Student S logged in</code>. So, add another filter, and a join to return the data it filters on:</p>
@@ -1125,9 +1125,7 @@ body .markdown-body
 
 <p><a href="./tut_img/6.png" target="_blank"><img src="./tut_img/6.png" alt="New database connection" style="max-width:100%;"></a></p>
 
-<p>Fill in your details and credentials here. One stumbling block I encountered here (with which the docs were unhelpful) was that "Database name" is straight-up mislabeled and actually refers to the database <em>instance</em> name, which you should be able to find like this: </p>
-
-<div class="highlight highlight-source-sql"><pre><span class="pl-k">select</span> sys_context(<span class="pl-s"><span class="pl-pds">'</span>userenv<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>instance_name<span class="pl-pds">'</span></span>) <span class="pl-k">from</span> dual;</pre></div>
+<p>Fill in your details and credentials here. One stumbling block I encountered here (with which the docs were unhelpful) was that "Database name" is straight-up mislabeled and actually refers to the database <em>instance</em> name, which you should be able to find in the Blackboard frontend admin console. </p>
 
 <blockquote>
 <p>If you're developing at the University of Amsterdam, you probably have access to the transforms I already wrote, so save yourself a lot of institutional headache: make a copy of a transform that uses a DB connection and delete all the steps, then save that somewhere under a different name. The underlying XML should still contain the connection information for dev and production DBs, which you can use in <em>Table input</em> steps as described above.</p>
@@ -1142,7 +1140,7 @@ body .markdown-body
 
 <p><a href="./tut_img/7.png" target="_blank"><img src="./tut_img/7.png" alt="Add some logic" style="max-width:100%;"></a></p>
 
-<p>...link it with the finished query step (shift-click on <em>query db for logins</em> and drag to the new step)...</p>
+<p>...link it with the finished query step (shift-click on <em>query db for logins</em> and drag to the new step - the Kettle term for the resulting link is a "hop")...</p>
 
 <p><a href="./tut_img/8.png" target="_blank"><img src="./tut_img/8.png" alt="Link up" style="max-width:100%;"></a></p>
 
@@ -1215,7 +1213,7 @@ body .markdown-body
 <div class="highlight highlight-source-js"><pre><span class="pl-c">// because of how Kettle implements rows and fields as objects,</span>
 <span class="pl-c">// you have to explicitly coerce input fields to strings before assigning</span>
 <span class="pl-c">// or you'll get a Java error that the field doesn't have a method "toJSON()"</span>
-<span class="pl-k">var</span> data <span class="pl-k">=</span> <span class="pl-c1">JSON</span>.stringify({
+<span class="pl-k">var</span> data <span class="pl-k">=</span> <span class="pl-smi">JSON</span>.<span class="pl-en">stringify</span>({
     actor<span class="pl-k">:</span> {
         objectType<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Agent<span class="pl-pds">"</span></span>,
         account<span class="pl-k">:</span> {
@@ -1282,20 +1280,20 @@ body .markdown-body
 
 <span class="pl-c">// later assignments shouldn't affect the skeleton:</span>
 <span class="pl-k">function</span> <span class="pl-en">clone</span> (<span class="pl-smi">obj</span>){
-  <span class="pl-k">return</span> <span class="pl-c1">JSON</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">JSON</span>.stringify(obj));
+  <span class="pl-k">return</span> <span class="pl-smi">JSON</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">JSON</span>.<span class="pl-en">stringify</span>(obj));
 }
 
 <span class="pl-c">// Transform script</span>
 
 <span class="pl-c">// clone the skeleton</span>
-<span class="pl-k">var</span> statement <span class="pl-k">=</span> clone(skeleton);
+<span class="pl-k">var</span> statement <span class="pl-k">=</span> <span class="pl-en">clone</span>(skeleton);
 
 <span class="pl-c">// mad libs</span>
-statement.actor.account.<span class="pl-c1">name</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">String</span>(<span class="pl-c1">USER_ID</span>);
-statement.timestamp <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">String</span>(<span class="pl-c1">TIMESTAMP</span>);
+<span class="pl-smi">statement</span>.<span class="pl-smi">actor</span>.<span class="pl-smi">account</span>.<span class="pl-c1">name</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">String</span>(<span class="pl-c1">USER_ID</span>);
+<span class="pl-smi">statement</span>.<span class="pl-smi">timestamp</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">String</span>(<span class="pl-c1">TIMESTAMP</span>);
 
 <span class="pl-c">// ready to send</span>
-<span class="pl-k">var</span> data <span class="pl-k">=</span> <span class="pl-c1">JSON</span>.stringify(statement);
+<span class="pl-k">var</span> data <span class="pl-k">=</span> <span class="pl-smi">JSON</span>.<span class="pl-en">stringify</span>(statement);
 </pre></div>
 
 <p>This may have some performance costs, which may or may not be worth it considering the additional encapsulation and maintainability. YMMV.</p>
@@ -1356,7 +1354,7 @@ statement.timestamp <span class="pl-k">=</span> <span class="pl-k">new</span> <s
 <p>or you can do this:</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c">// ...</span>
-<span class="pl-k">var</span> data <span class="pl-k">=</span> <span class="pl-c1">JSON</span>.stringify(statement);
+<span class="pl-k">var</span> data <span class="pl-k">=</span> <span class="pl-smi">JSON</span>.<span class="pl-en">stringify</span>(statement);
 <span class="pl-k">var</span> xApiVersion <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>1.0.1<span class="pl-pds">'</span></span>;</pre></div>
 
 <p>I put it in the JavaScript step, for the same reason that I scope my SQL joins (that is, the version is relevant to the processing of the statement, which only gets produced in the JavaScript step), but YMMV as always. Whichever way you do it: the input field you select from the drop-down box in the Headers tab becomes the header value, and the table cell next to it becomes the header name.</p>
@@ -1464,7 +1462,7 @@ student_idn
 </ul>
 
 <blockquote>
-<p>n.b.: "Replace variables in script" sounds like the above is what it does, but (surprise, surprise) it actually does something slightly different, which we'll be seeing later on.</p>
+<p>n.b.: "Replace variables in script" sounds like the above is what it does, but (surprise, surprise) it actually does something slightly different: it allows you to use variables defined elsewhere (including other transformations, which we'll be writing later on).</p>
 </blockquote>
 
 <h4>
@@ -1529,52 +1527,46 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
 <h3>
 <a id="user-content-pre-dinner-mayonnaise-functional-flavor" class="anchor" href="#pre-dinner-mayonnaise-functional-flavor" aria-hidden="true"><span class="octicon octicon-link"></span></a><del><a href="https://youtu.be/3d-qENAaNbM?t=111">Pre-dinner mayonnaise</a></del> Functional flavor</h3>
 
-<p>Conceptually, this isn't a particularly tricky requirement. We just need to get the latest timestamp from the LRS, and only get records from the DB with a timestamp later than that. However, there are several things that make this slightly less straightforward in practice:</p>
+<p>Conceptually, this isn't a particularly tricky requirement. We just need a timestamp after which we know for sure there aren't any of our statements in the LRS. However, there are several things that make this slightly less straightforward in practice:</p>
 
 <ul>
 <li>Obviously, we need to know the latest timestamp <em>before</em> we query the DB, because we have to add it as a filter on that query.  However: Kettle transforms, by design, don't guarantee that rows will pass through in any given order, so whatever we do, we can't be getting the latest timestamp in same transform that uses it.</li>
 <li>Additionally, xAPI is an open standard, and it would be obstructively naïve to imagine that we're developing the only application that'll ever be storing statements in the LRS; as such, we don't just need the timestamp of the most recent statement in the LRS: we need the timestamp of the most recent statement <em>that we know we sent</em>.</li>
+<li>However, we can't actually ask the LRS itself what this timestamp is: the LRS runs on top of CouchDB, which is a document-based DB you interact with through a REST API. This means there are two ways to find a given document: either you include its ID directly in the HTTP query parameters, or you craft that query such that the document is included in the result set. The catch is that the set of documents you receive as a response to the latter query might not actually be identical with the set of all documents that match the query: before a document can be successfully queried for by anything other than its ID, CouchDB has to <em>index</em> it (generate a view that includes it). </li>
+<li>This means that if you pump a metric shit-ton of documents into the LRS at once, and then ask for the timestamp of the most recent one before all of them have been indexed, you're not going to get the timestamp you expect; you're going to get the timestamp of the statement which the LRS' DB has most recently indexed. If you then use this timestamp as a boundary condition for the next batch of statements, you're going to get some degree of overlap in the periods of time covered by two subsequent batches, which (especially if you're sending a lot of volume to begin with) can result in a <em>lot</em> of duplicate statements, which is exactly what we're trying to avoid.</li>
+<li>There are a variety of ways to solve this; what seems like the safest thing is to check beforehand if indexing is complete, and don't send any new statements if it's not. (Blackboard data will continue to be there, so it's not like you're failing to record activity if you're not constantly sending statements.) Fortunately, xAPI specifies a property for this. According to the spec, the <code>stored</code> property is the timestamp representing the point when the statement was "made available for retrieval"; since a statement logically has to be stored after it was received, all we need to do is record the timestamp of the latest POST request in every batch, and check to make sure the <code>stored</code> property of the most recently-indexed statement is later than that. (It's also possible to query CouchDB itself for a list of active tasks, including indexing, but that would generally either require us to be running our transforms on the same machine as the LRS or have it configured for remote administration, both of which are neither guaranteed nor even necessarily good ideas in this context.)</li>
+<li>Finally, it's important to note that the timestamp of the latest POST request (which we need to check whether or not to run at all) is <em>not identical</em> with the timestamp of the statement sent as the body of that request (which we need, in the event we decide to run, to limit the result set of the database queries).</li>
 </ul>
-
-<h4>
-<a id="user-content-semantic-coherence" class="anchor" href="#semantic-coherence" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semantic coherence</h4>
-
-<p>However we end up implementing it, we know that the latter condition is essentially just a filter on the set of statements returned by the LRS: instead of all statements, we want only the statements that come from us, from which we'll then pick the most recent. Before we can filter the data, though, we'll need to add some feature to filter on; fortunately, xAPI provides one for just this sort of thing.</p>
-
-<p>The <code>registration</code> property (one you can optionally specify as part of a statement's <code>context</code>) is one you can filter on as part of a GET request, and because it has to be a UUID, it's guaranteed to be as unique as you want it to be. It's designed for this purpose or any purpose remotely similar to it: when you want to be able to easily determine where a statement came from, use <code>registration</code>. We'll generate a UUID <a href="https://www.uuidgenerator.net/">here</a>, and include it as part of every statement we send:  </p>
-
-<div class="highlight highlight-source-js"><pre>    <span class="pl-c">// ...</span>
-    context<span class="pl-k">:</span> {
-        registration<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>c0ee3003-6151-4871-87d5-866712639f08<span class="pl-pds">"</span></span>,
-        platform<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>https://blackboard.uva.nl/<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-c">// ...</span></pre></div>
 
 <h4>
 <a id="user-content-keeping-order" class="anchor" href="#keeping-order" aria-hidden="true"><span class="octicon octicon-link"></span></a>Keeping order</h4>
 
-<p>Now that we know that we can reliably query the LRS for only the statements we're sending it, we have to get the latest timestamp and use it to filter the results from the database query. Kettle transforms don't have a fixed step order (the arrows just define where a row can go from any given step); Kettle <em>jobs</em>, though, most certainly do.</p>
+<p>In any case, the decision to run or not obviously has to be made before running the transformation we just wrote. As mentioned, Kettle transforms don't have a fixed step order (the arrows just define where a row can go from any given step); Kettle <em>jobs</em>, though, most certainly do.</p>
 
 <p>A job is one step up the scope/abstraction ladder; the main feature of a job is that you can run transforms from within it, and they're guaranteed to run in the order you specify, so there's an amount of certitude about the output of a particular job step (unhelpfully called a <em>job entry</em> in the docs even though they're isomorphic to transform steps) that you don't get in a transform. </p>
 
-<p>Another useful feature of jobs is the ability to declare variables which are available to parent processes. Well, technically this is a feature of transforms, but it's deliberately meaningless without an overarching job, because Kettle disallows the use of a variable within the transform that declares it, and will make you click a button confirming you understand this every time you declare one (until you turn that off, at least). So, the first thing to do is to write a transform that'll store the latest relevant LRS timestamp in a variable, and after that we'll incorporate both transforms in a job (meaning we'll have to modify the first transform to use the variable as well).</p>
+<p>So, the first thing to do is to write a transform that'll check whether or not it's safe to run, and after that we'll incorporate both transforms in a job (meaning we'll also have to modify the first transform to additionally record the data we need to make the above determination).</p>
 
 <h4>
-<a id="user-content-latest-timestamp" class="anchor" href="#latest-timestamp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Latest timestamp</h4>
+<a id="user-content-checking-indexing" class="anchor" href="#checking-indexing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Checking indexing</h4>
 
-<p>Start with a new transform and a blank workspace; this time, though, since we have a little more knowledge as to what's available, we'll do some of the thinking ahead of time as regards which steps we'll need. We know we need:</p>
+<p>Start with a new transform and a blank workspace; this time, though, I'll assume increasing facility with Kettle (and its barely-there docs), so that we can do some of the thinking ahead of time and in a nutshell with regard to which steps we'll need and why: </p>
 
 <ul>
-<li>a <em>REST Client</em> step to query the LRS;</li>
-<li>a <em>Json Input</em> step to parse the LRS' response;</li>
-<li>a <em>Set Variables</em> step (for obvious reasons; we haven't seen this step yet, but it jumps out at you fairly unambiguously if you enter "variable" into the sidebar search field in Spoon).</li>
+<li>We know we need two timestamps before we start running: the latest POST request made by the last-run instance of our main transform, and the latest activity recorded in a statement by that transform. There are probably more ways to do this than there are developers who could implement it, so let's pick a simple solution and stick with it: the main transform will append each of those to its own text file, so that the job can read the last lines of both as separate command-line arguments. This means our new transform will need the <em>Get System Info</em> step to parse one of those arguments.</li>
+<li>We'll need the <em>REST Client</em> step to query the LRS and the <em>Json Input</em> step to parse its response.</li>
+<li>To be able to compare the timestamp of the latest POST with the most-recently-stored statement, we'll need to combine them into a single row, so we'll need <em>Join Rows (cartesian product)</em>.</li>
+<li>Importantly, though, the <em>Json Input</em> step can specify a datatype for the fields it parses, but a command-line argument has to be a string, so we'll also need a <em>Select values</em> step to make the fields logically comparable.</li>
+<li>To actually perform the comparison, we need a <em>Filter rows</em> step; in Kettle-land, anything not an explicit failure is a success, so we need an <em>Abort</em> step at the very least (and let's also add a <em>Write to log</em> step for some visible confirmation that things are happening as we expect).</li>
 </ul>
 
 <p>We're also going to need the <em>Generate Rows</em> step, since the <em>REST Client</em> step needs some input that we can't declare in its configuration. The workspace should look like this:</p>
 
-<p><a href="./tut_img/24.png" target="_blank"><img src="./tut_img/24.png" alt="Timestamp getter workspace" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/24.png" target="_blank"><img src="./tut_img/24.png" alt="Timestamp checker workspace" style="max-width:100%;"></a></p>
 
-<p>Configuration of <em>Generate Rows</em> is pretty straightforward:</p>
+<p>You'll notice that you have a choice of output types when you go to connect <em>Filter rows</em> and the steps following it. This is pretty straightforward.</p>
+
+<p>Configuration of <em>Generate Rows</em> is also not complicated:</p>
 
 <p><a href="./tut_img/25.png" target="_blank"><img src="./tut_img/25.png" alt="Generate rows config" style="max-width:100%;"></a></p>
 
@@ -1584,58 +1576,19 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
 
 <p><a href="./tut_img/26.png" target="_blank"><img src="./tut_img/26.png" alt="REST client config" style="max-width:100%;"></a></p>
 
-<p>You can't declare headers in the step config, but at least you can specify the whole query: the URL to which we're POSTing in the main transform is also the one we GET from, but we also need to append a query string or we'll just get the 500 most recent statements (which is the order in which the LRS returns them by default, so we don't have to specify that) and a URL to GET from if we want the next 500. As you can see, we're just telling the LRS we want statements with the registration we specified in the main transform, and we only want one of them (which will then be the most recent one).</p>
+<p>You can't declare headers in the step config, but at least you can specify the whole query: the URL to which we're POSTing in the main transform is also the one we GET from, but we also need to append a query string or we'll just get the 500 most recent statements (which is the order in which the LRS returns them by default, so we don't have to specify that) and a URL to GET from if we want the next 500. As you can see, we're just telling the LRS we want a single statement.</p>
 
 <blockquote>
 <p>The options available when constructing a query are fully documented in the xAPI spec, in the section on the <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#stmtapi">Statement API</a>.</p>
 </blockquote>
 
-<p>Hang on, though. Maybe you already ran the main transform (after adding the <code>registration</code> but before incorporating the timestamp variable) and therefore have a few statements in your LRS, such that a GET request like this will actually return something, but then again, maybe not. In the latter case, you'll want to drop a statement in that can be arbitrarily bogus as long as it contains the correct <code>registration</code> and a timestamp specifying some moment before the one at which you want tracking to "officially" start. Here's some JS to do just that, which you can fire off with a <em>Generate Rows</em> and <em>REST Client</em> step just as though you had generated it "naturally":</p>
+<p>The "Content" tab of the <em>Json Input</em> step you can leave as-is; the "File" tab only requires that you specify the field with incoming JSON:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> xApiVersion <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>1.0.1<span class="pl-pds">'</span></span>;
+<p><a href="./tut_img/27.png" target="_blank"><img src="./tut_img/27.png" alt="JSON config 1" style="max-width:100%;"></a></p>
 
-<span class="pl-k">var</span> data <span class="pl-k">=</span> <span class="pl-c1">JSON</span>.stringify({
-  actor<span class="pl-k">:</span> {
-      objectType<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Agent<span class="pl-pds">"</span></span>,
-      mbox<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>mailto:noreply-kettle@ic.uva.nl<span class="pl-pds">"</span></span>
-  },
-  verb<span class="pl-k">:</span> {
-      id<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>http://adlnet.gov/expapi/verbs/initialized<span class="pl-pds">"</span></span>,
-      display<span class="pl-k">:</span> {
-          <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>initialized<span class="pl-pds">"</span></span>
-      }
-  },
-  object<span class="pl-k">:</span> {
-      objectType<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Activity<span class="pl-pds">"</span></span>,
-      id<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>https://your.etl.machine/<span class="pl-pds">"</span></span>,
-      definition<span class="pl-k">:</span> {
-          name<span class="pl-k">:</span> {
-              <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Kettle login tracking<span class="pl-pds">"</span></span>
-          },
-          type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>http://activitystrea.ms/schema/1.0/application<span class="pl-pds">"</span></span>
-      }
-  },
-  context<span class="pl-k">:</span> {
-      registration<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>c0ee3003-6151-4871-87d5-866712639f08<span class="pl-pds">"</span></span>,
-  },
-  timestamp<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>1970-01-01T01:00:00.000Z<span class="pl-pds">"</span></span>
-});</pre></div>
+<p>The "Fields" tab is almost entirely straightforward as well, except for the "Path" field; this uses <a href="http://goessner.net/articles/JsonPath/">JSONPath</a> syntax to parse the JSON it receives.</p>
 
-<p><a href="./tut_img/27.png" target="_blank"><img src="./tut_img/27.png" alt="Drop a first statement in" style="max-width:100%;"></a></p>
-
-<pre><code>$ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf3.ktr
-&gt; pan /norep /file (fp .\tf3.ktr)
-</code></pre>
-
-<p><a href="./tut_img/28.png" target="_blank"><img src="./tut_img/28.png" alt="Success" style="max-width:100%;"></a></p>
-
-<p>Now that we know for sure that a GET request with the appropriate query will return something useful, we can get on with configuring the rest of the transform. The "Content" tab of the <em>Json Input</em> step you can leave as-is; the "File" tab only requires that you specify the field with incoming JSON:</p>
-
-<p><a href="./tut_img/29.png" target="_blank"><img src="./tut_img/29.png" alt="JSON config 1" style="max-width:100%;"></a></p>
-
-<p>The "Content" tab is almost entirely straightforward as well, except for the "Path" field; this uses <a href="http://goessner.net/articles/JsonPath/">JSONPath</a> syntax to parse the JSON it receives.</p>
-
-<p><a href="./tut_img/30.png" target="_blank"><img src="./tut_img/30.png" alt="JSON config 2" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/28.png" target="_blank"><img src="./tut_img/28.png" alt="JSON config 2" style="max-width:100%;"></a></p>
 
 <p>Here's a breakdown of the syntax we're using, in case it's not totally clear:</p>
 
@@ -1651,50 +1604,101 @@ $ sh ~/data-integration/pan.sh -norep -file /full/path/to/tf1.ktr /full/path/to/
 -----------------------------------------------------------------------
 ^ every element at the current depth (ie. all statement objects)
 
-.                                       timestamp
+.                                       stored
 -----------------------------------------------------------------------
 ^ down again (reaches each statement)   ^ name of property
 </code></pre>
 
-<p>The only thing left is to configure the <em>Set Variables</em> step to understand the output:</p>
+<p>The <em>Get System Info</em> step is about as simple as it gets; give the field a name, and select "command line argument 3" from the list that appears when you click the "Type" field. (I used the second argument for the statement timestamp because that makes sense to me: it's both causally and logically prior to the POST request that sends it. YMMV. The first argument, of course, is still the list of consenting student IDs.) The <em>Select values</em> step is only slightly less straightforward; it's worth noting that you apparently have to tell the step to select a field in the "Select &amp; Alter" tab before you can change its type in the "Meta-data" tab. Also, make sure you use the correct date format anytime you're casting a string to a date or vice versa. (There's only one format being used in this entire tutorial, but that doesn't have to be the case.)</p>
 
-<p><a href="./tut_img/31.png" target="_blank"><img src="./tut_img/31.png" alt="Variable config and warning" style="max-width:100%;"></a></p>
+<p><em>Join rows (cartesian product)</em> is also fairly simple. We just want to make sure both dates are part of a single row, so we can set the condition to "TRUE"; a thing to pay attention to, however, is the "Main step to read data from" option. This will wait for rows from the specified input step by caching ones from any other input step. We know that the parsing and casting of the command-line argument will happen essentially instantaneously, while we might have to wait a second or two for a response from the LRS, so set this to <em>parse json response</em>:</p>
 
-<p>With this, the transform to parse the latest timestamp should be complete - feel free to add a <em>Write to log</em> step to check that it returns the correct date. Make sure you select "Copy" as the data distribution method, so both <em>Set Variables</em> and the logger get the same rows, and "Get Fields" in the latter (and you should disable the hop from <em>parse response</em> to <em>Set Variables</em> for testing purposes, because if you run the transform by itself with Pan, there won't be a parent job in whose context to set the variable, and it'll error out).</p>
+<p><a href="./tut_img/29.png" target="_blank"><img src="./tut_img/29.png" alt="Join rows config" style="max-width:100%;"></a></p>
+
+<p>Finally, make sure the filter condition is configured correctly: we want to continue if and only if the <code>stored</code> property on the statement we just received is later (ie. greater) than our last POST request.</p>
+
+<p><a href="./tut_img/30.png" target="_blank"><img src="./tut_img/30.png" alt="Filter rows config" style="max-width:100%;"></a></p>
+
+<p>(<em>Write to log</em> and <em>Abort</em> should be self-explanatory by this point.)</p>
 
 <h4>
 <a id="user-content-jobs-well-done" class="anchor" href="#jobs-well-done" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jobs well done</h4>
 
 <p><code>Ctrl+Shift+N</code> creates a new job, and the workspace looks identical to that of a transform; the only real difference is that the sidebar gives you different steps (sorry, "entries"). All you really need to know is here:</p>
 
-<p><a href="./tut_img/32.png" target="_blank"><img src="./tut_img/32.png" alt="Job workspace" style="max-width:100%;"></a></p>
+<p><a href="./tut_img/31.png" target="_blank"><img src="./tut_img/31.png" alt="Job workspace" style="max-width:100%;"></a></p>
 
-<p>You only need the <em>START</em> and <em>Transformation</em> entries, and when configuring the latter, all you need to do is enter the path to the transform in question. That little <code>&lt;$&gt;</code> symbol next to some configuration fields (which you have undoubtedly seen elsewhere) means that the value of a variable can be used for all or part of that field; select the field and hit <code>Ctrl+Space</code> to see which ones are available. Kettle predefines a few for you; in this case, we want <code>${Internal.Job.Filename.Directory}</code>, which does exactly what it says on the tin. (This means you'll have to keep the transforms in the same directory as the job; feel free to modify as you see fit, or even hardcode the paths, as long as the job knows exactly where to find the transforms.) The only thing left after this is to edit the DB query in the main transform to use the variable we just defined, and then we'll be ready to deploy.</p>
+<p>You only need the <em>START</em> and <em>Transformation</em> entries, and when configuring the latter, all you need to do is enter the path to the transform in question. That little <code>&lt;$&gt;</code> symbol next to some configuration fields (which you have undoubtedly seen elsewhere) means that the value of a variable can be used for all or part of that field; select the field and hit <code>Ctrl+Space</code> to see which ones are available. Kettle predefines a few for you; in this case, we want <code>${Internal.Job.Filename.Directory}</code>, which does exactly what it says on the tin. (This means you'll have to keep the transforms in the same directory as the job; feel free to modify as you see fit, or even hardcode the paths, as long as the job knows exactly where to find the transforms.) One thing worth mentioning: you'll notice that the hop between the two transforms is green with a little check mark; this works similarly to the <em>Filter rows</em> step in that you can specify different output steps based on whether the result of a transform was success or failure. You can also click the symbol to cycle the hop between states: success, failure and a little lock symbol that means the next transform is run unconditionally.</p>
+
+<p>Now that that's sorted, we have to modify the main transform, to accept an additional argument as a filter on the query, and to append both of the timestamps we need to separate text files.</p>
 
 <h4>
-<a id="user-content-incorporating-variables" class="anchor" href="#incorporating-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Incorporating variables</h4>
+<a id="user-content-finishing-touches" class="anchor" href="#finishing-touches" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finishing touches</h4>
 
-<p><a href="./tut_img/33.png" target="_blank"><img src="./tut_img/33.png" alt="DB query redux" style="max-width:100%;"></a></p>
+<p>There are a number of small-but-significant things to be done here, some of which may not be immediately obvious:</p>
 
-<p>This is all there is to it. Check the box "replace variables in script" (this is what it's actually for - told you we'd be seeing it eventually), and add another line to the <code>where</code> clause to filter on:</p>
+<ul>
+<li>configure <em>get cmd arg</em> to also read the second command-line argument;</li>
+<li>configure <em>read user list</em> to "Pass through fields from previous step";</li>
+<li>
+<p>add a line to <em>query db for logins</em>, casting the new field to an appropriate datatype and filtering on it:</p>
 
 <div class="highlight highlight-source-sql"><pre><span class="pl-c">-- ...</span>
-<span class="pl-k">and</span> <span class="pl-c1">aa</span>.<span class="pl-c1">timestamp</span> <span class="pl-k">&gt;</span> to_date(<span class="pl-s"><span class="pl-pds">'</span>${latest_timestamp}<span class="pl-pds">'</span></span>,
-                           <span class="pl-s"><span class="pl-pds">'</span>YYYY-MM-DD"T"HH24:MI:SS".000Z"<span class="pl-pds">'</span></span>)</pre></div>
+<span class="pl-k">and</span> <span class="pl-c1">u</span>.<span class="pl-c1">user_id</span> <span class="pl-k">=</span> ?
+<span class="pl-k">and</span> <span class="pl-c1">aa</span>.<span class="pl-c1">timestamp</span> <span class="pl-k">&gt;</span> to_date(?,<span class="pl-s"><span class="pl-pds">'</span>YYYY-MM-DD"T"HH24:MI:SS".000Z"<span class="pl-pds">'</span></span>)</pre></div>
 
-<p>The use of <code>to_date()</code> here is to preclude any unexpected things happening with differences between how Kettle, Oracle, and the LRS handle dates - we're wrapping the variable in single quotes so that it's treated like a string in the SQL, and then copy-pasting the date format we specified in the <code>select</code> clause, because we know that's how it was given to the LRS in the first place.</p>
+<p><a href="./tut_img/32.png" target="_blank"><img src="./tut_img/32.png" alt="SQL edit" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>because you're now getting a superfluous field from <em>read user list</em> (the filename of the user list in question), add a <em>Select values</em> in between <em>read user list</em> and <em>query db for logins</em>, to filter that out (and make sure the fields you do want are being passed through in the correct order, since that matters for the query's purposes). You can drag the step directly onto the hop and Kettle will ask you if you want to interpose it:</p>
+
+<p><a href="./tut_img/33.png" target="_blank"><img src="./tut_img/33.png" alt="Select values" style="max-width:100%;"></a></p>
+</li>
+</ul>
+
+<p>So that's the filter taken care of; however, while we can run the job by manually entering correctly-formatted datetime strings, it's not quite ready for deployment. Here's where it gets slightly more tricky (but only slightly):</p>
+
+<ul>
+<li>
+<p>Add another <em>Select values</em> step, <em>after</em> the query step but as a separate output (as opposed to interposing it between that step and <em>login row to statement</em>), to filter out everything but the timestamp, and cast it back to a "Date" datatype (pay attention to the format mask, as this is once again Java string parsing and not case-smashing SQL). If you haven't configured the appropriate option when you try to create a hop from a step that already has an output step, Kettle will ask you to pick "Distribute" or "Copy" as the behavior of the step you're linking from with regard to the rows that leave it; we want "Copy", which is also the default once you tell Kettle to stop asking.</p>
+
+<p><a href="./tut_img/34.png" target="_blank"><img src="./tut_img/34.png" alt="More value selection" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>Add a <em>Memory Group by</em> step after that. This step is an aggregator, caching the fields you tell it to from all the rows it receives and performing some transformation on the whole group. The upper table contains fields that are passed through as-is, and the lower table contains fields on which some aggregation is done. These are exhaustive: similarly to <em>Select values</em>, if a field doesn't appear in either table, it doesn't appear in the output.</p>
+
+<p><a href="./tut_img/35.png" target="_blank"><img src="./tut_img/35.png" alt="Memory Group by" style="max-width:100%;"></a></p>
+</li>
+<li><p>Add yet another <em>Select values</em>; if you didn't, Kettle would write the timestamp to disk in whichever format it damn well pleased, and since the query expects a string of a particular format, we want a little more control over the output than that. (You could also modify the query to expect whatever format Kettle uses by default, but I like my solution better. YMMV.)</p></li>
+<li>Finally, add a <em>Text file output</em> step, append the string representing the latest timestamp to a file in the same directory as the parent job (you have to explicitly tell it to append rather than clobber, but it'll quietly create the file if it doesn't exist yet). Remember that Kettle thinks this is basically a CSV file, so make sure you also tell it not to use enclosures or a header.</li>
+</ul>
+
+<p>That's one timestamp; the other is essentially the same deal. You'll need another <em>Get System Info</em>, <em>Memory Group by</em>, <em>Select values</em> and <em>Text file output</em>; helpfully, when <em>Get System Info</em> isn't used purely as an input step, it appends its fields to rows passed through it, so you just have to copy the output of the REST call (ie. the response confirming the LRS has received a statement) to that step and select "system date (variable)" as the type of the new field. (You don't have to interpose a <em>Select values</em> between <em>Get System Info</em> and <em>Memory Group by</em> because the system date is already a sensible datatype.) When you're through, the workspace should look something like this:</p>
+
+<p><a href="./tut_img/36.png" target="_blank"><img src="./tut_img/36.png" alt="All done" style="max-width:100%;"></a></p>
 
 <h4>
 <a id="user-content-redeploying" class="anchor" href="#redeploying" aria-hidden="true"><span class="octicon octicon-link"></span></a>(Re)Deploying</h4>
 
-<p>Fortunately, Kettle is tool-agnostic when it comes to parsing command-line arguments; this means all you have to do with the invocation is change <code>pan</code> to <code>kitchen</code>, and the name of the transform to the name of the overarching job.</p>
+<p>Fortunately, Kettle is tool-agnostic when it comes to parsing command-line arguments; this means all you really have to do with the invocation is change <code>pan</code> to <code>kitchen</code>, and the name of the transform to the name of the overarching job.</p>
 
-<pre><code>$ sh ~/data-integration/kitchen.sh -norep -file /full/path/to/job1.kjb /full/path/to/studentIDs.txt
+<pre><code>$ sh ~/data-integration/kitchen.sh -norep -file /full/path/to/job1.kjb \
+/full/path/to/studentIDs.txt
 
 &gt; kitchen /norep /file (fp .\job1.kjb) (fp .\studentIDs.txt)
 </code></pre>
 
-<p>That's it! Drop the job, transforms, and list of consenting users on an arbitrary machine with an up-to-date JRE and Kettle installed (ie. downloaded, unpacked, environment variables set), and you can schedule it to run however often you like.</p>
+<p><strong>However.</strong> Here's the part where I get less than totally system-agnostic, as a matter of principle: the way I prefer to pass the appropriate timestamps to the job is like this:</p>
+
+<pre><code>$ sh ~/data-integration/kitchen.sh -norep -file /full/path/to/job1.kjb \
+/full/path/to/studentIDs.txt \ 
+`tail -1 /path/to/latest_timestamps.txt` \
+`tail -1 /path/to/latest_posts.txt`
+</code></pre>
+
+<p>You can do command substitution in essentially the same way on Windows (and in fact I'm using it to get the full paths of things), but there really should be something equivalent to <code>tail</code>. Someone has ported the GNU coreutils to Windows by now, or alternatively you could write a PowerShell script, but here we are either way. </p>
+
+<p>And that's it! Drop the job, transforms, and list of consenting users on an arbitrary machine with an up-to-date JRE and Kettle installed (ie. downloaded, unpacked, environment variables set), and you can schedule it to run however often you like.</p>
 
 <h3>
 <a id="user-content-additional-resources" class="anchor" href="#additional-resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional resources</h3>
